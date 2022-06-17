@@ -23,8 +23,8 @@ namespace ControleMedicamentos.Dominio.ModuloRequisicao
 
         public Medicamento Medicamento { get; set; }
         public Paciente Paciente { get; set; }
-        public int QtdMedicamento { get; set; }
-        public DateTime Data { get; set; }
+        public int? QtdMedicamento { get; set; }
+        public DateTime? Data { get; set; }
         public Funcionario Funcionario { get; set; }
 
         public void ConfigurarPaciente(Paciente paciente)

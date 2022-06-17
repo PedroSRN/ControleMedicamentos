@@ -33,8 +33,14 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloRequisicao
 
         public RepositorioRequisicaoEmBancoDadosTest()
         {
-          
-            Db.ExecutarSql("DELETE FROM TBREQUISICAO; DBCC CHECKIDENT (TBREQUISICAO, RESEED, 0)");
+            //Db.ExecutarSql("DELETE FROM TBREQUISICAO; DBCC CHECKIDENT (TBREQUISICAO, RESEED, 0)");
+            Db.ExecutarSql(@"
+            DELETE FROM TBREQUISICAO; DBCC CHECKIDENT (TBREQUISICAO, RESEED, 0)                   
+            DELETE FROM TBMEDICAMENTO; DBCC CHECKIDENT (TBMEDICAMENTO, RESEED, 0)                   
+            DELETE FROM TBFUNCIONARIO; DBCC CHECKIDENT (TBFUNCIONARIO, RESEED, 0)                   
+            DELETE FROM TBPACIENTE; DBCC CHECKIDENT (TBPACIENTE, RESEED, 0)
+            DELETE FROM TBFORNECEDOR; DBCC CHECKIDENT (TBFORNECEDOR, RESEED, 0)");
+           
 
             fornecedor = new Fornecedor("Neo Quimica", "32333040", "neoquimica@gmail.com", "São Paulo", "SP");
             
@@ -142,30 +148,41 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloRequisicao
         public void Deve_selecionar_todas_As_Requisicoes()
         {
             //arrange
-            fornecedor = new Fornecedor("Neo Quimica", "32333040", "neoquimica@gmail.com", "São Paulo", "SP");
-            paciente = new Paciente("Carlos","232323");
-            funcionario = new Funcionario("Pedro", "pedro", "0077");
-            medicamento = new Medicamento("Risotril", "Para alegrar seu dia","1234", new(2023, 8, 9), 15, fornecedor);
-            var r01 = new Requisicao(medicamento, paciente, 1, DateTime.Now, funcionario);
+            Fornecedor fornecedor1 = new Fornecedor("Neo Quimica", "32333040", "neoquimica@gmail.com", "São Paulo", "SP");
+            Paciente paciente1 = new Paciente("Carlos","232323");
+            Funcionario funcionario1 = new Funcionario("Pedro", "pedro", "0077");
+            Medicamento medicamento1 = new Medicamento("Risotril", "Para alegrar seu dia","1234", new(2023, 8, 9), 15, fornecedor1);
+            var r01 = new Requisicao(medicamento1, paciente1, 1, DateTime.Now, funcionario1);
 
-            fornecedor = new Fornecedor("Neo Quimica", "32333040", "neoquimica@gmail.com", "São Paulo", "SP");
-            paciente = new Paciente("Tales","266565");
-            funcionario = new Funcionario("Eduardo", "Eduardo", "0078");
-            medicamento = new Medicamento("Estomazil","Para problemas de estômago","5678", new(2024, 9, 8), 13, fornecedor);
-            var r02 = new Requisicao(medicamento, paciente, 2, DateTime.Now, funcionario);
+            Fornecedor fornecedor2 = new Fornecedor("Neo Quimica", "32333040", "neoquimica@gmail.com", "São Paulo", "SP");
+            Paciente paciente2 = new Paciente("Tales","266565");
+            Funcionario funcionario2 = new Funcionario("Eduardo", "Eduardo", "0078");
+            Medicamento medicamento2 = new Medicamento("Estomazil","Para problemas de estômago","5678", new(2024, 9, 8), 13, fornecedor2);
+            var r02 = new Requisicao(medicamento2, paciente2, 2, DateTime.Now, funcionario2);
 
-            fornecedor = new Fornecedor("Neo Quimica", "32333040", "neoquimica@gmail.com", "São Paulo", "SP");
-            paciente = new Paciente("Pedro","454638");
-            funcionario = new Funcionario("Anderson", "Anderson", "0079");
-            medicamento = new Medicamento("Pastilhas","Para tosse", "45454", new(2025,4,5), 20, fornecedor);
-            var r03 = new Requisicao(medicamento, paciente, 3, DateTime.Now, funcionario);
+            Fornecedor fornecedor3 = new Fornecedor("Neo Quimica", "32333040", "neoquimica@gmail.com", "São Paulo", "SP");
+            Paciente paciente3 = new Paciente("Pedro","454638");
+            Funcionario funcionario3 = new Funcionario("Anderson", "Anderson", "0079");
+            Medicamento medicamento3 = new Medicamento("Pastilhas","Para tosse", "45454", new(2025,4,5), 20, fornecedor3);
+            var r03 = new Requisicao(medicamento3, paciente3, 3, DateTime.Now, funcionario3);
 
             var repositorio = new RepositorioRequisicaoEmBancoDados();
 
-            repositorioFornecedor.Inserir(fornecedor);
-            repositorioFuncionario.Inserir(funcionario);
-            repositorioPaciente.Inserir(paciente);
-            repositorioMedicamento.Inserir(medicamento);
+            repositorioFornecedor.Inserir(fornecedor1);
+            repositorioFuncionario.Inserir(funcionario1);
+            repositorioPaciente.Inserir(paciente1);
+            repositorioMedicamento.Inserir(medicamento1);
+
+            repositorioFornecedor.Inserir(fornecedor2);
+            repositorioFuncionario.Inserir(funcionario2);
+            repositorioPaciente.Inserir(paciente2);
+            repositorioMedicamento.Inserir(medicamento2);
+
+            repositorioFornecedor.Inserir(fornecedor3);
+            repositorioFuncionario.Inserir(funcionario3);
+            repositorioPaciente.Inserir(paciente3);
+            repositorioMedicamento.Inserir(medicamento3);
+            
             repositorio.Inserir(r01);
             repositorio.Inserir(r02);
             repositorio.Inserir(r03);
